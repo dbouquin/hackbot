@@ -55,6 +55,7 @@ def main():
         downloaded_file = get_latest_file_in_directory('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files')
 
         if downloaded_file and downloaded_file.endswith('.ZIP'):
+            #TODO: add condition to check if filename contains job number
             unzip_file(os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files', downloaded_file), '/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files')
 
 #TODO: Add code to rename the csv file to keep only the job number
