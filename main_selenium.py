@@ -91,7 +91,18 @@ def main():
     except Exception as e:
         print(f"An error occurred: {e}")
 
+#TODO: add text after underscore to .csv file name
+#TODO: look into using json dict to store configs for reports and dir locations
 
 main()
 
 #%%
+
+# Idea:
+# + All ROI reports run 15 mins apart, emails received soon after
+# + Power Automate runs after each email is received; stores link.txt and job.txt in OneDrive
+# + Selenium script runs 10 minutes after each report is scheduled to run
+# + After Selenium script runs on last report, a new python script checks configs
+#   for the report name and stores the file in the correct directory
+# Consisider link and job file naming.
+# Maybe add report name to file name and create separate selenium scripts for each report
