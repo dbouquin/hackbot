@@ -1,0 +1,31 @@
+FILE LAYOUT
+
+
+FILE NAME: NPCA_JOB107565_HEATHER.csv
+RECORD COUNT: 56
+FILE FORMAT: COMMA SEPARATED (CHARACTER COLUMNS ENCLOSED IN DOUBLE-QUOTES ("))
+
+
+COLUMN NAME                    DATA TYPE      DATA LENGTH    EDIT MASK                     
+-----------                    ---------      -----------    ---------                     
+ROI_ID                         NUMBER         38                                           
+ROI_FAMILY_ID                  NUMBER         38                                           
+NET_AMOUNT                     NUMBER         14                                           
+TRANSACTION_TYPE_NAME          ALPHANUMERIC   12                                           
+CHAPTER_PRIMARY_CODE           ALPHANUMERIC   4                                            
+HOUSEHOLD_ADDRESS_LINE         ALPHANUMERIC   44                                           
+HOUSEHOLD_SALUTATION           ALPHANUMERIC   25                                           
+STREET                         ALPHANUMERIC   34                                           
+ADDRESS_ALTLINE1               ALPHANUMERIC   43                                           
+ADDRESS_ALTLINE2               ALPHANUMERIC   0                                            
+ADDRESS_ALTLINE3               ALPHANUMERIC   0                                            
+CITY                           ALPHANUMERIC   17                                           
+STATE                          ALPHANUMERIC   13                                           
+ZIPCODE                        ALPHANUMERIC   10                                           
+PHONE_NUMBER                   ALPHANUMERIC   11                                           
+EMAIL                          ALPHANUMERIC   28                                           
+MRC_AMOUNT                     NUMBER         14                                           
+MRC_DATE                       DATE           10             MM/DD/YYYY                    
+HPC_AMOUNT                     NUMBER         14                                           
+HPC_DATE                       DATE           10             MM/DD/YYYY                    
+CRITICAL_FLAGS                 ALPHANUMERIC   10                                           
