@@ -32,7 +32,7 @@ def main():
             job_number = f.read().strip()
 
         chrome_options = Options()
-        chrome_options.add_argument("--headless")  # Ensure GUI is off
+        chrome_options.add_argument("--headless")  # GUI off
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
 
@@ -65,7 +65,7 @@ def main():
             )
 
             for file in os.listdir('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files'):
-                if file.endswith('.csv'):
+                if file.startswith('NPCA') and file.endswith('.csv'):
                     os.rename(
                         os.path.join(
                             '/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files', file
