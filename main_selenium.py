@@ -28,16 +28,17 @@ def main():
         with open('credentials.json', 'r') as f:
             credentials = json.load(f)
 
+        with open('job.txt', 'r') as f:
+            job_number = f.read().strip()
+
         chrome_options = Options()
         chrome_options.add_argument("--headless")  # Ensure GUI is off
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
 
-        # Set the download behavior
         prefs = {"download.default_directory": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files"}
         chrome_options.add_experimental_option("prefs", prefs)
 
-        # Set path to chromedriver as per your configuration
         webdriver_service = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=webdriver_service, options=chrome_options)
 
@@ -49,17 +50,23 @@ def main():
 
         driver.find_element(By.CSS_SELECTOR, '#frmlogin2 button[type="submit"].btn.btn-default').click()
 
-        # Wait for 5 seconds to allow the download to start
         time.sleep(5)
 
         downloaded_file = get_latest_file_in_directory('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files')
 
-        if downloaded_file and downloaded_file.endswith('.ZIP'):
-            #TODO: add condition to check if filename contains job number
+        if downloaded_file and downloaded_file.endswith('.ZIP') and job_number in downloaded_file:
             unzip_file(os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files', downloaded_file), '/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files')
 
-#TODO: Add code to rename the csv file to keep only the job number
-#TODO: Add code to delete the zip file and txt file
+            for file in os.listdir('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files'):
+                if file.endswith('.csv'):
+                    os.rename(os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files', file), os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files', f'{job_number}.csv'))
+
+            os.remove(os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files', downloaded_file))
+
+            # Remove all .txt files
+            for file in os.listdir('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files'):
+                if file.endswith('.TXT'):
+                    os.remove(os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files', file))
 
         driver.quit()
 
