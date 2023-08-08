@@ -21,19 +21,15 @@ def unzip_file(zip_filepath, dest_dir):
         zip_ref.extractall(dest_dir)
 
 # Main function
-def main():
+def main(link_file_path):
     try:
         # Load the URL from the file
-        with open('link.txt', 'r') as f:
+        with open(link_file_path, 'r') as f:
             url = f.read().strip()
 
         # Load the credentials from the file
         with open('credentials.json', 'r') as f:
             credentials = json.load(f)
-
-        # Load the job number from the file
-        with open('job.txt', 'r') as f:
-            job_number = f.read().strip()
 
         # Load the directory map from the JSON file
         with open('map.json', 'r') as f:
@@ -65,13 +61,13 @@ def main():
         driver.find_element(By.CSS_SELECTOR, '#frmlogin2 button[type="submit"].btn.btn-default').click()
 
         # Wait for the download to start
-        time.sleep(5)
+        time.sleep(10)
 
         # Get the name of the latest file in the download directory
         downloaded_file = get_latest_file_in_directory('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad')
 
-        # If the downloaded file is a ZIP file and contains the job number, unzip it
-        if downloaded_file and downloaded_file.endswith('.ZIP') and job_number in downloaded_file:
+        # If the downloaded file is a ZIP file, unzip it
+        if downloaded_file and downloaded_file.endswith('.ZIP'):
             unzip_file(
                 os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad', downloaded_file),
                 '/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad'
@@ -84,23 +80,20 @@ def main():
                     # Split the filename into the prefix and the rest
                     prefix, rest_of_filename = file.split('NPCA_JOB', 1)
 
-                    # Only rename files where the job number in the file matches the job number we're looking for
-                    job_number_in_file = rest_of_filename.split('_', 1)[0]
-                    if job_number_in_file == job_number:
-                        new_filename = rest_of_filename
-                        os.rename(
-                            os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad', file),
-                            os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad', new_filename)
-                        )
+                    new_filename = rest_of_filename
+                    os.rename(
+                        os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad', file),
+                        os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad', new_filename)
+                    )
 
-                        # Move the file to the correct directory based on its name
-                        for keyword, directory in directory_map.items():
-                            if keyword in new_filename.upper():
-                                shutil.move(
-                                    os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad', new_filename),
-                                    os.path.join(directory, new_filename)
-                                )
-                                break
+                    # Move the file to the correct directory based on its name
+                    for keyword, directory in directory_map.items():
+                        if keyword in new_filename.upper():
+                            shutil.move(
+                                os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad', new_filename),
+                                os.path.join(directory, new_filename)
+                            )
+                            break
 
             # Remove the original ZIP file
             os.remove(
@@ -120,7 +113,17 @@ def main():
     except Exception as e:
         print(f"An error occurred: {e}")
 
-# Run the main function
-main()
+# process all the files in the roi_links directory
+def process_all_links():
+    # Get a list of all .txt files in the roi_links/ directory
+    link_files = [f for f in os.listdir('roi_links/') if f.endswith('.txt')]
+
+    # Loop through each link file and call the main() function
+    for link_file in link_files:
+        main(os.path.join('roi_links/', link_file))
+        time.sleep(10)  # Wait for 10 seconds before processing the next file
+
+# Run the process_all_links function
+process_all_links()
 
 #%%
