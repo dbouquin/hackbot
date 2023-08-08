@@ -1,5 +1,5 @@
 {
-    "TESTMACHINE": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/test_machine_files",
-    "OTHERMACHINE": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/other_machine_files",
+    "TESTMACHINE": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/files_test_machine",
+    "OTHERMACHINE": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/files_other_machine",
     "landing_pad": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad"
 }
