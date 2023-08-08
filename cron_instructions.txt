@@ -1,0 +1,33 @@
+# get python version for cron job
+
+	(base) dbouquin@17:13 $ conda activate hackbot
+	(hackbot) dbouquin@17:16 $ which python
+	/opt/anaconda3/envs/hackbot/bin/python
+
+# get file path
+
+	$ pwd
+	/Users/dbouquin/OneDrive/Documents_Daina/hackbot
+
+
+# write cron job with log file to run at 7AM Mon-Thu
+
+	$ crontab -e
+
+	0 7 * * 1-4 /opt/anaconda3/envs/hackbot/bin/python /Users/dbouquin/OneDrive/Documents_Daina/hackbot/main_selenium.py >> /Users/dbouquin/OneDrive/Documents_Daina/hackbot/log.txt 2>&1
+
+	# press i to edit file
+	# press ESC then type :wq to exit
+
+
+# give permissions to run job
+
+	$ chmod +x /Users/dbouquin/OneDrive/Documents_Daina/hackbot/main_selenium.py
+
+# schedule computer to wake at 6:59AM Mon-Thu
+
+	$ sudo pmset repeat wakeorpoweron MTWR 06:59:00 
+
+# check schedule
+
+	$ pmset -g sched                               
