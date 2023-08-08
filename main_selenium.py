@@ -9,16 +9,19 @@ import os
 import time
 import shutil
 
+
 # Function to get the latest file in a directory
 def get_latest_file_in_directory(directory):
     files = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
     files.sort(key=lambda x: os.path.getmtime(os.path.join(directory, x)))
     return files[-1] if files else None
 
+
 # Function to unzip a file
 def unzip_file(zip_filepath, dest_dir):
     with zipfile.ZipFile(zip_filepath, 'r') as zip_ref:
         zip_ref.extractall(dest_dir)
+
 
 # Main function
 def main(link_file_path):
@@ -114,6 +117,7 @@ def main(link_file_path):
     except Exception as e:
         print(f"An error occurred: {e}")
 
+
 # process all the files in the roi_links directory
 def process_all_links():
     # Get a list of all .txt files in the roi_links/ directory
@@ -124,6 +128,6 @@ def process_all_links():
         main(os.path.join('roi_links/', link_file))
         time.sleep(10)  # Wait for 10 seconds before processing the next file
 
+
 # Run the process_all_links function
 process_all_links()
-
