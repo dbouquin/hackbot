@@ -66,14 +66,17 @@ def main():
 
             for file in os.listdir('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files'):
                 if file.startswith('NPCA') and file.endswith('.csv'):
-                    os.rename(
-                        os.path.join(
-                            '/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files', file
-                        ),
-                        os.path.join(
-                            '/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files', f'{job_number}.csv'
+                    # Split the filename into the prefix and the rest
+                    prefix, rest_of_filename = file.split('NPCA_JOB', 1)
+
+                    # Only rename files where the job number in the file matches the job number we're looking for
+                    job_number_in_file = rest_of_filename.split('_', 1)[0]
+                    if job_number_in_file == job_number:
+                        new_filename = rest_of_filename
+                        os.rename(
+                            os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files', file),
+                            os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/rescued_roi_files', new_filename)
                         )
-                    )
 
             os.remove(
                 os.path.join(
@@ -91,10 +94,10 @@ def main():
     except Exception as e:
         print(f"An error occurred: {e}")
 
-#TODO: add text after underscore to .csv file name
-#TODO: look into using json dict to store configs for reports and dir locations
-
 main()
+
+
+#TODO: look into using json dict to store configs for reports and dir locations
 
 #%%
 
