@@ -34,15 +34,16 @@ def main(link_file_path):
         # Load the directory map from the JSON file
         with open('map.json', 'r') as f:
             directory_map = json.load(f)
+            landing_pad_dir = directory_map.get('landing_pad')
 
-        # Set up the Chrome options
+    # Set up the Chrome options
         chrome_options = Options()
         chrome_options.add_argument("--headless")  # GUI off
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
 
         # Set the default download directory
-        prefs = {"download.default_directory": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad"}
+        prefs = {"download.default_directory": landing_pad_dir}
         chrome_options.add_experimental_option("prefs", prefs)
 
         # Set up the WebDriver service
@@ -64,17 +65,17 @@ def main(link_file_path):
         time.sleep(10)
 
         # Get the name of the latest file in the download directory
-        downloaded_file = get_latest_file_in_directory('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad')
+        downloaded_file = get_latest_file_in_directory(landing_pad_dir)
 
         # If the downloaded file is a ZIP file, unzip it
         if downloaded_file and downloaded_file.endswith('.ZIP'):
             unzip_file(
-                os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad', downloaded_file),
-                '/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad'
+                os.path.join(landing_pad_dir, downloaded_file),
+                landing_pad_dir
             )
 
             # Loop through all the files in the download directory
-            for file in os.listdir('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad'):
+            for file in os.listdir(landing_pad_dir):
                 # If the file is a CSV file and starts with 'NPCA', rename it
                 if file.startswith('NPCA') and file.endswith('.csv'):
                     # Split the filename into the prefix and the rest
@@ -82,15 +83,15 @@ def main(link_file_path):
 
                     new_filename = rest_of_filename
                     os.rename(
-                        os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad', file),
-                        os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad', new_filename)
+                        os.path.join(landing_pad_dir, file),
+                        os.path.join(landing_pad_dir, new_filename)
                     )
 
                     # Move the file to the correct directory based on its name
                     for keyword, directory in directory_map.items():
                         if keyword in new_filename.upper():
                             shutil.move(
-                                os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad', new_filename),
+                                os.path.join(landing_pad_dir, new_filename),
                                 os.path.join(directory, new_filename)
                             )
                             break
@@ -98,14 +99,14 @@ def main(link_file_path):
             # Remove the original ZIP file
             os.remove(
                 os.path.join(
-                    '/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad', downloaded_file
+                    landing_pad_dir, downloaded_file
                 )
             )
 
             # Remove all .txt files
-            for file in os.listdir('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad'):
+            for file in os.listdir(landing_pad_dir):
                 if file.endswith('.TXT'):
-                    os.remove(os.path.join('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad', file))
+                    os.remove(os.path.join(landing_pad_dir, file))
 
         # Close the browser
         driver.quit()
@@ -126,4 +127,3 @@ def process_all_links():
 # Run the process_all_links function
 process_all_links()
 
-#%%
