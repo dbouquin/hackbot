@@ -31,15 +31,16 @@ def main(link_file_path):
             url = f.read().strip()
 
         # Load the credentials from the file
-        with open('credentials.json', 'r') as f:
+        with open(credentials_path, 'r') as f:
             credentials = json.load(f)
 
         # Load the directory map from the JSON file
         with open('map.json', 'r') as f:
             directory_map = json.load(f)
             landing_pad_dir = directory_map.get('landing_pad')
+            roi_links_dir = directory_map.get('roi_links')
 
-    # Set up the Chrome options
+        # Set up the Chrome options
         chrome_options = Options()
         chrome_options.add_argument("--headless")  # GUI off
         chrome_options.add_argument("--no-sandbox")
@@ -118,18 +119,32 @@ def main(link_file_path):
         print(f"An error occurred: {e}")
 
 
+
+def initialize_directories():
+    """Loads the directory paths from the map.json file and initializes global variables."""
+    global directory_map, roi_links_dir, landing_pad_dir, credentials_path
+    try:
+        with open('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/map.json', 'r') as f:
+            directory_map = json.load(f)
+            landing_pad_dir = directory_map.get('landing_pad')
+            roi_links_dir = directory_map.get('roi_links')
+            credentials_path = directory_map.get('credentials')
+    except Exception as e:
+        raise RuntimeError(f"Failed to initialize directories from map.json: {e}")
+
 # process all the files in the roi_links directory
 def process_all_links():
     # Get a list of all .txt files in the roi_links/ directory
-    link_files = [f for f in os.listdir('roi_links/') if f.endswith('.txt')]
+    link_files = [f for f in os.listdir(roi_links_dir) if f.endswith('.txt')]
 
     # Loop through each link file and call the main() function
     for link_file in link_files:
-        main(os.path.join('roi_links/', link_file))
-        time.sleep(5)  # Wait for 10 seconds before processing the next file
+        main(os.path.join(roi_links_dir, link_file))
+        time.sleep(1)  # Wait for 1 second before processing the next file
 
 
 # Run the process_all_links function
+initialize_directories()
 process_all_links()
 
 #%%

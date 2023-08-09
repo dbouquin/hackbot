@@ -10,11 +10,11 @@
 	/Users/dbouquin/OneDrive/Documents_Daina/hackbot
 
 
-# write cron job with log file to run at 7AM Mon-Thu
+# write cron job to run at 6AM Mon-Thu
 
 	$ crontab -e
 
-	0 7 * * 1-4 /opt/anaconda3/envs/hackbot/bin/python /Users/dbouquin/OneDrive/Documents_Daina/hackbot/main_selenium.py >> /Users/dbouquin/OneDrive/Documents_Daina/hackbot/log.txt 2>&1
+	0 6 * * 1-4 source /opt/anaconda3/bin/activate hackbot && /opt/anaconda3/envs/hackbot/bin/python /Users/dbouquin/OneDrive/Documents_Daina/hackbot/main_selenium_cronjob.py
 
 	# press i to edit file
 	# press ESC then type :wq to exit
@@ -24,9 +24,17 @@
 
 	$ chmod +x /Users/dbouquin/OneDrive/Documents_Daina/hackbot/main_selenium.py
 
-# schedule computer to wake at 6:59AM Mon-Thu
 
-	$ sudo pmset repeat wakeorpoweron MTWR 06:59:00 
+# give cron full disk access:
+	
+	Settings > Privacy > Full Disk Access + > /usr/sbin/cron
+
+	To see all hidden files SHIFT + COMMAND + .
+
+
+# schedule computer to wake at 5:59AM Mon-Thu
+
+	$ sudo pmset repeat wakeorpoweron MTWR 05:59:00 
 
 # check schedule
 
