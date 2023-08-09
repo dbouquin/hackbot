@@ -21,6 +21,7 @@ Once you've made the edits, turn on your flow (right click it) and you'll be rea
 #### Add your report to the map
 Now you have your `roi_links/`, but before you can use the Hackbot, you need to *tell the bot where to put your files*. To do this, update the `map.json` file. Use your report name and enter the full path to the directory you want the file to go in. Create a new directory for your files if you need one.  
 
+````
 {
     "TESTMACHINE": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/files_test_machine",
     "OTHERMACHINE": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/files_other_machine",
@@ -28,6 +29,7 @@ Now you have your `roi_links/`, but before you can use the Hackbot, you need to 
     "roi_links": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/roi_links",
     "credentials": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/credentials.json"
 }
+````
 
 #### Add your ROI credentials
 Create a file called `credentials.json`. In this file, create a JSON array and fill in your ROI credentials:
