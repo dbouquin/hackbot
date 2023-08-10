@@ -119,7 +119,6 @@ def main(link_file_path):
         print(f"An error occurred: {e}")
 
 
-
 def initialize_directories():
     """Loads the directory paths from the map.json file and initializes global variables."""
     global directory_map, roi_links_dir, landing_pad_dir, credentials_path

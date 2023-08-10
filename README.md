@@ -9,14 +9,16 @@ The Hackbot is here to help you jailbreak ROI files and get them to where you ne
 #### Before you use the Hackbot, you must do another hacky thing
 The Hackbot assumes you have a directory called `/roi_links` containing .txt files populated with download URLs from reports you've scheduled in ROI. To get those .txt files, use Power Automate:   
    
-Power Automate extracts your file download URL whenever you receive one in a ROI email – it writes the URL to a .txt file and names the file using the report name (e.g., link_testmachine.txt). Each report needs a separate Power Automate "flow." To make a flow, just copy one of the existing Hackbot flows that already exist, then update your copied flow: 
+Power Automate extracts your file download URL whenever you receive one in a ROI email – it writes the URL to a .txt file and names the file using the report name (e.g., link_testmachine.txt). Each report needs a separate Power Automate "flow." To make a flow, just copy one of the existing Hackbot flows and update your copy: 
 
 * Rename the flow with your report name (e.g., Hackbot - test machine)
 * Change the email subject search to include the name you've given the report (e.g., subject: TESTMACHINE)
 	* *Note: do not put spaces in the report name when you schedule it in ROI*
 * Change the write file action to name the file with your report name. (e.g., link_testmachine.txt)
 
-Once you've made the edits, turn on your flow (right click it) and you'll be ready to go.  
+More detail about the Power Automate flows used by Hackbot is available here.
+
+Once you've made your edits, turn on the flow (right click it) and you'll be ready to go.  
   
 #### Add your report to the map
 Now you have your `roi_links/`, but before you can use the Hackbot, you need to *tell the bot where to put your files*. To do this, update the `map.json` file. Use your report name and enter the full path to the directory you want the file to go in. Create a new directory for your files if you need one.  
@@ -42,9 +44,9 @@ Create a file called `credentials.json`. In this file, create a JSON array and f
 }
 
 `````
-Once you have saved your credentials file, **update the credentials path specified in the `map.json` file**.   
-*Note: the .gitignore file in this repo ignores your credenitals file so you won't end up uploading it to GitHub by mistake.*
+Once you have saved your credentials file, **update the credentials path specified in the `map.json` file**.  
 
+*Note: the .gitignore file in this repo ignores your credenitals file so you won't end up uploading it to GitHub by mistake.*
 
 #### Specify your map.json file's location
 The only path that's hardcoded into the main scrip in the path to `map.json`. Open the `main_selenium.py` file and update the `initialize_directories()` function with the file path you're using for your map.
@@ -64,7 +66,7 @@ Now you're ready to roll.
 
 Open `main_selenium.py` and run it in an IDE or run it via the command line.  
 
-The Hackbot uses Chromium (what the Chrome browser uses) headlessly (no GUI) and enters your credentials in order to initiate a file download from ROI servers. The file downloads faster than you can say "Why isn't there an API for this?" and is placed into the `landing_pad/` where it gets unzipped. Hackbot then renames the file to keep just the "job number" associated with the email you received for that report, plus the report name. The file is then moved to the location you specified. The reportname is used to look up the location in the map file.
+The Hackbot uses Chromium (what the Chrome browser uses) headlessly (no GUI) and enters your credentials in order to initiate a file download from ROI servers. The file downloads faster than you can say "Why isn't there an API for this?" and is placed into the `landing_pad/` where it gets unzipped. Hackbot then renames the file to keep just the "job number" associated with the email you received for that report, plus the report name. The file is then moved to the location you specified. The report name is used to look up the location in the map file.
 
 ### Cron job
 See `cron_instructions.txt` and use `main_selenium_cron.py`

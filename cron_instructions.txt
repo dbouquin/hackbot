@@ -4,12 +4,6 @@
 	(hackbot) dbouquin@17:16 $ which python
 	/opt/anaconda3/envs/hackbot/bin/python
 
-# get file path
-
-	$ pwd
-	/Users/dbouquin/OneDrive/Documents_Daina/hackbot
-
-
 # write cron job to run at 6AM Mon-Thu
 
 	$ crontab -e
@@ -22,12 +16,12 @@
 
 # give permissions to run job
 
-	$ chmod +x /Users/dbouquin/OneDrive/Documents_Daina/hackbot/main_selenium.py
+	$ chmod +x /Users/dbouquin/OneDrive/Documents_Daina/hackbot/main_selenium_cronjob.py
 
 
 # give cron full disk access:
 	
-	Settings > Privacy > Full Disk Access + > /usr/sbin/cron
+	Settings > Privacy > Full Disk Access > + > /usr/sbin/cron
 
 	To see all hidden files SHIFT + COMMAND + .
 
