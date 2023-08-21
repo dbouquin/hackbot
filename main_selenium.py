@@ -8,6 +8,7 @@ import zipfile
 import os
 import time
 import shutil
+from datetime import datetime
 
 
 # Function to get the latest file in a directory
@@ -72,7 +73,7 @@ def main(link_file_path):
         downloaded_file = get_latest_file_in_directory(landing_pad_dir)
 
         # If the downloaded file is a ZIP file, unzip it
-        if downloaded_file and downloaded_file.endswith('.ZIP'):
+        if downloaded_file and downloaded_file.lower().endswith('.zip'):
             unzip_file(
                 os.path.join(landing_pad_dir, downloaded_file),
                 landing_pad_dir
@@ -82,23 +83,31 @@ def main(link_file_path):
             for file in os.listdir(landing_pad_dir):
                 # If the file is a CSV file and starts with 'NPCA', rename it
                 if file.startswith('NPCA') and file.endswith('.csv'):
-                    # Split the filename into the prefix and the rest
                     prefix, rest_of_filename = file.split('NPCA_JOB', 1)
-
                     new_filename = rest_of_filename
-                    os.rename(
-                        os.path.join(landing_pad_dir, file),
-                        os.path.join(landing_pad_dir, new_filename)
-                    )
 
-                    # Move the file to the correct directory based on its name
-                    for keyword, directory in directory_map.items():
-                        if keyword in new_filename.upper():
-                            shutil.move(
-                                os.path.join(landing_pad_dir, new_filename),
-                                os.path.join(directory, new_filename)
-                            )
-                            break
+                # Check if file contains "QTool" and ends with .csv
+                elif "QTool" in file and file.endswith('.csv'):
+                    today_date = datetime.now().strftime("%Y%m%d")
+                    new_filename = f"{today_date}_WEALTHSCREENING.csv"
+
+                else:
+                    continue
+
+                # Rename the file
+                os.rename(
+                    os.path.join(landing_pad_dir, file),
+                    os.path.join(landing_pad_dir, new_filename)
+                )
+
+                # Move the file to the correct directory based on its name
+                for keyword, directory in directory_map.items():
+                    if keyword in new_filename.upper():
+                        shutil.move(
+                            os.path.join(landing_pad_dir, new_filename),
+                            os.path.join(directory, new_filename)
+                        )
+                        break
 
             # Remove the original ZIP file
             os.remove(
@@ -131,7 +140,8 @@ def initialize_directories():
     except Exception as e:
         raise RuntimeError(f"Failed to initialize directories from map.json: {e}")
 
-# process all the files in the roi_links directory
+
+# Process all the files in the roi_links directory
 def process_all_links():
     # Get a list of all .txt files in the roi_links/ directory
     link_files = [f for f in os.listdir(roi_links_dir) if f.endswith('.txt')]
@@ -145,5 +155,3 @@ def process_all_links():
 # Run the process_all_links function
 initialize_directories()
 process_all_links()
-
-#%%

@@ -1,6 +1,7 @@
 {
     "TESTMACHINE": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/files_test_machine",
     "OTHERMACHINE": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/files_other_machine",
+    "WEALTHSCREENING": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/files_wealthscreening",
     "landing_pad": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad",
     "roi_links": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/roi_links",
     "credentials": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/credentials.json"
