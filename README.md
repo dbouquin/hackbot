@@ -21,7 +21,7 @@ More detail about the Power Automate flows used by Hackbot is available here.
 Once you've made your edits, turn on the flow (right click it) and you'll be ready to go.  
   
 #### Add your report to the map
-Now you have your `roi_links/`, but before you can use the Hackbot, you need to *tell the bot where to put your files*. To do this, update the `map.json` file. Use your report name and enter the full path to the directory you want the file to go in. Create a new directory for your files if you need one.  
+Now you have your `roi_links/`, but before you can use the Hackbot, you need to *tell the bot where to put your files*. To do this, update the [`map.json`](https://github.com/dbouquin/hackbot/blob/main/map.json) file. Use your report name and enter the full path to the directory you want the file to go in. Create a new directory for your files if you need one.  
 
 ````
 {
@@ -46,7 +46,7 @@ Create a file called `credentials.json`. In this file, create a JSON array and f
 `````
 Once you have saved your credentials file, **update the credentials path specified in the `map.json` file**.  
 
-*Note: the .gitignore file in this repo ignores your credenitals file so you won't end up uploading it to GitHub by mistake.*
+*Note: the [.gitignore](https://github.com/dbouquin/hackbot/blob/main/.gitignore) file in this repo ignores your credenitals file so you won't end up uploading it to GitHub by mistake.*
 
 #### Specify your map.json file's location
 The only path that's hardcoded into the main scrip in the path to `map.json`. Open the `main_selenium.py` file and update the `initialize_directories()` function with the file path you're using for your map.
