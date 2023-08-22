@@ -4,11 +4,11 @@
 	(hackbot) dbouquin@17:16 $ which python
 	/opt/anaconda3/envs/hackbot/bin/python
 
-# write cron job to run at 6AM Mon-Thu
+# write cron job to run at 5AM every day
 
 	$ crontab -e
 
-	0 6 * * 1-4 source /opt/anaconda3/bin/activate hackbot && /opt/anaconda3/envs/hackbot/bin/python /Users/dbouquin/OneDrive/Documents_Daina/hackbot/main_selenium_cronjob.py
+	0 5 * * * source /opt/anaconda3/bin/activate hackbot && /opt/anaconda3/envs/hackbot/bin/python /Users/dbouquin/OneDrive/Documents_Daina/hackbot/main_selenium_cronjob.py
 
 	# press i to edit file
 	# press ESC then type :wq to exit
