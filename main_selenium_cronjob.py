@@ -139,7 +139,8 @@ def initialize_directories():
     """Loads the directory paths from the map.json file and initializes global variables."""
     global directory_map, roi_links_dir, landing_pad_dir, credentials_path
     try:
-        with open('/Users/dbouquin/OneDrive/Documents_Daina/hackbot/map.json', 'r') as f:
+        with open('/Users/dbouquin/Library/CloudStorage/OneDrive-NationalParksConservationAssociation/'
+                  'General - Data Vault/hackbot_data_vault/map.json', 'r') as f:
             directory_map = json.load(f)
             landing_pad_dir = directory_map.get('landing_pad')
             roi_links_dir = directory_map.get('roi_links')

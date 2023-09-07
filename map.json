@@ -1,8 +1,8 @@
 {
-    "TESTMACHINE": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/files_test_machine",
-    "OTHERMACHINE": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/files_other_machine",
-    "WEALTHSCREENING": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/files_wealthscreening",
-    "landing_pad": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/landing_pad",
-    "roi_links": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/roi_links",
-    "credentials": "/Users/dbouquin/OneDrive/Documents_Daina/hackbot/credentials.json"
+    "TESTMACHINE": "/Users/dbouquin/Library/CloudStorage/OneDrive-NationalParksConservationAssociation/General - Data Vault/hackbot_data_vault/files_test_machine",
+    "OTHERMACHINE": "/Users/dbouquin/Library/CloudStorage/OneDrive-NationalParksConservationAssociation/General - Data Vault/hackbot_data_vault/files_other_machine",
+    "WEALTHSCREENING": "/Users/dbouquin/Library/CloudStorage/OneDrive-NationalParksConservationAssociation/General - Data Vault/hackbot_data_vault/files_wealthscreening",
+    "landing_pad": "/Users/dbouquin/Library/CloudStorage/OneDrive-NationalParksConservationAssociation/General - Data Vault/hackbot_data_vault/landing_pad",
+    "roi_links": "/Users/dbouquin/Library/CloudStorage/OneDrive-NationalParksConservationAssociation/General - Data Vault/hackbot_data_vault/roi_links",
+    "credentials": "/Users/dbouquin/Library/CloudStorage/OneDrive-NationalParksConservationAssociation/General - Data Vault/hackbot_data_vault/credentials.json"
 }
