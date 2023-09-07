@@ -8,15 +8,14 @@
 
 	$ crontab -e
 
-	0 5 * * * source /opt/anaconda3/bin/activate hackbot && /opt/anaconda3/envs/hackbot/bin/python /Users/dbouquin/OneDrive/Documents_Daina/hackbot/main_selenium_cronjob.py
-
+    0 5 * * * source /opt/anaconda3/bin/activate hackbot && /opt/anaconda3/envs/hackbot/bin/python /Users/dbouquin/Library/CloudStorage/OneDrive-NationalParksConservationAssociation/Data_Vault/hackbot_data_vault/main_selenium_cronjob.py
 	# press i to edit file
 	# press ESC then type :wq to exit
 
 
 # give permissions to run job
 
-	$ chmod +x /Users/dbouquin/OneDrive/Documents_Daina/hackbot/main_selenium_cronjob.py
+	$ chmod +x /Users/dbouquin/Library/CloudStorage/OneDrive-NationalParksConservationAssociation/Data_Vault/hackbot_data_vault/main_selenium_cronjob.py
 
 
 # give cron full disk access:
@@ -26,9 +25,9 @@
 	To see all hidden files SHIFT + COMMAND + .
 
 
-# schedule computer to wake at 5:59AM Mon-Thu
+# schedule computer to wake at 4:59AM Mon-Thu
 
-	$ sudo pmset repeat wakeorpoweron MTWR 05:59:00 
+	$ sudo pmset repeat wakeorpoweron MTWR 04:59:00
 
 # check schedule
 

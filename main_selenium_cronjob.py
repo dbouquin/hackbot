@@ -140,7 +140,7 @@ def initialize_directories():
     global directory_map, roi_links_dir, landing_pad_dir, credentials_path
     try:
         with open('/Users/dbouquin/Library/CloudStorage/OneDrive-NationalParksConservationAssociation/'
-                  'General - Data Vault/hackbot_data_vault/map.json', 'r') as f:
+                  'Data_Vault/hackbot_data_vault/map.json', 'r') as f:
             directory_map = json.load(f)
             landing_pad_dir = directory_map.get('landing_pad')
             roi_links_dir = directory_map.get('roi_links')
