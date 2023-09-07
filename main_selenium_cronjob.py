@@ -128,6 +128,25 @@ def main(link_file_path):
                 if file.endswith('.TXT'):
                     os.remove(os.path.join(landing_pad_dir, file))
 
+        elif "FoundationsReport" in downloaded_file:
+            today_date = datetime.now().strftime("%Y%m%d")
+            new_filename = f"{today_date}_FOUNDATIONSREPORT.csv"
+            
+            # Rename the file
+            os.rename(
+                os.path.join(landing_pad_dir, downloaded_file),
+                os.path.join(landing_pad_dir, new_filename)
+            )
+
+            # Move the file to the correct directory based on its name
+            for keyword, directory in directory_map.items():
+                if keyword in new_filename.upper():
+                    shutil.move(
+                        os.path.join(landing_pad_dir, new_filename),
+                        os.path.join(directory, new_filename)
+                    )
+                    break
+                    
         # Close the browser
         driver.quit()
 
