@@ -139,6 +139,12 @@ def main(link_file_path):
                         os.path.join(directory, new_filename)
                     )
                     break
+            # Make a copy of the file with a static name
+            static_name = "FOUNDATIONSREPORT_CURRENT.csv"
+            shutil.copy2(
+                os.path.join(directory, new_filename),
+                os.path.join(directory, static_name)
+            )
                     
         # Close the browser
         driver.quit()
