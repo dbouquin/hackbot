@@ -16,7 +16,7 @@ Power Automate extracts your file download URL whenever you receive one in a ROI
 	* *Note: do not put spaces in the report name when you schedule it in ROI*
 * Change the write file action to name the file with your report name. (e.g., link_testmachine.txt)
 
-More detail about the Power Automate flows used by Hackbot is available here.
+More detail about the Power Automate flows used by Hackbot is available [here](https://npcaweb.sharepoint.com/:fl:/r/contentstorage/CSP_74a50e21-42fe-4099-b810-9dae767be62f/Document%20Library/LoopAppData/Hackbot.loop?d=w12797ddf754d4de79c6c34b087644b49&csf=1&web=1&e=SeBy5v&nav=cz0lMkZjb250ZW50c3RvcmFnZSUyRkNTUF83NGE1MGUyMS00MmZlLTQwOTktYjgxMC05ZGFlNzY3YmU2MmYmZD1iJTIxSVE2bGRQNUNtVUM0RUoydWRudm1MOTN6eFpRTHhxcEFsaV9IckRFdk1PTVlUQ3RqbzByTlRvTE90WWJIU1pxUyZmPTAxTUU3NDQzNjdQVjRSRVRMVjQ1R1pZM0JVV0NEV0lTMkomYz0lMkYmYT1Mb29wQXBwJnA9JTQwZmx1aWR4JTJGbG9vcC1wYWdlLWNvbnRhaW5lciZ4PSU3QiUyMnclMjIlM0ElMjJUMFJUVUh4dWNHTmhkMlZpTG5Ob1lYSmxjRzlwYm5RdVkyOXRmR0loU1ZFMmJHUlFOVU50VlVNMFJVb3lkV1J1ZG0xTU9UTjZlRnBSVEhoeGNFRnNhVjlJY2tSRmRrMVBUVmxVUTNScWJ6QnlUbFJ2VEU5MFdXSklVMXB4VTN3d01VMUZOelEwTXpKVVZrOUdOMFpQTlZkTFFraEpUMFpJTlU5UFQxVXlOVEpJJTIyJTJDJTIyaSUyMiUzQSUyMjMxNzdhNzc2LTIyNTctNDUzYS04YjM3LWUyNGZiMGE1ZTljZSUyMiU3RA%3D%3D).
 
 Once you've made your edits, turn on the flow (right click it) and you'll be ready to go.  
   
@@ -49,7 +49,7 @@ Once you have saved your credentials file, **update the credentials path specifi
 *Note: the [.gitignore](https://github.com/dbouquin/hackbot/blob/main/.gitignore) file in this repo ignores your credenitals file so you won't end up uploading it to GitHub by mistake.*
 
 #### Specify your map.json file's location
-The only path that's hardcoded into the main scrip in the path to `map.json`. Open the `main_selenium.py` file and update the `initialize_directories()` function with the file path you're using for your map.
+The only path that's hardcoded into the main script is the path to `map.json`. Open the `main_selenium.py` file and update the `initialize_directories()` function with the file path you're using for your map.
 
 #### Install dependencies
 
