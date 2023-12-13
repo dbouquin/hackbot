@@ -88,8 +88,21 @@ def main(link_file_path):
 
             # Loop through all the files in the download directory
             for file in os.listdir(landing_pad_dir):
+                # Initialize new_filename as None
+                new_filename = None
+
+                # check for dop_files
+                dop_files = ['HTACTIVITIES', 'MGRATINGS', 'PLANNEDGIFTS',
+                             'PLEDGES', 'PLEDGESCHEDULE', 'PROPOSALS',
+                             'ACCOUNTFLAGSSINCEFY18', 'RELATIONSHIPMANAGERASSIGNMENTS', 'TRANSACTIONSWSOLICITORS',
+                             'ALLTRANSACTIONS', 'ALLACCOUNTSANDINFO', 'FIRSTGIFTSALL']
+
+                if any(dop_file in file for dop_file in dop_files) and file.endswith('.csv'):
+                    today_date = datetime.now().strftime("%Y%m%d")
+                    new_filename = f"{today_date}_{file}"
+
                 # If the file is a CSV file and starts with 'NPCA', rename it
-                if file.startswith('NPCA') and file.endswith('.csv'):
+                elif file.startswith('NPCA') and file.endswith('.csv'):
                     prefix, rest_of_filename = file.split('NPCA_JOB', 1)
                     new_filename = rest_of_filename
 
