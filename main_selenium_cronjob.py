@@ -73,8 +73,8 @@ def main(link_file_path):
         # Submit the form
         driver.find_element(By.CSS_SELECTOR, '#frmlogin2 button[type="submit"].btn.btn-default').click()
 
-        # Wait for the download to start
-        time.sleep(5)
+        # Wait for the download to finish
+        time.sleep(8)
 
         # Get the name of the latest file in the download directory
         downloaded_file = get_latest_file_in_directory(landing_pad_dir)
@@ -92,7 +92,7 @@ def main(link_file_path):
                 new_filename = None
 
                 # check for dop_files
-                dop_files = ['HTACTIVITIES', 'MGRATINGS', 'PLANNEDGIFTS',
+                dop_files = ['HTACTIVITIES', 'MGRATINGS', 'PLANNEDGIFTS', 'EVENTSANDATTENDEESSINCEFY19',
                              'PLEDGES', 'PLEDGESCHEDULE', 'PROPOSALS',
                              'ACCOUNTFLAGSSINCEFY18', 'RELATIONSHIPMANAGERASSIGNMENTS', 'TRANSACTIONSWSOLICITORS',
                              'ALLTRANSACTIONS', 'ALLACCOUNTSANDINFO', 'FIRSTGIFTSALL']
@@ -100,6 +100,8 @@ def main(link_file_path):
                 if any(dop_file in file for dop_file in dop_files) and file.endswith('.csv'):
                     today_date = datetime.now().strftime("%Y%m%d")
                     new_filename = f"{today_date}_{file}"
+                    # strip "NPCA_JOB" from filename
+                    new_filename = new_filename.replace('NPCA_JOB', '')
 
                 # If the file is a CSV file and starts with 'NPCA', rename it
                 elif file.startswith('NPCA') and file.endswith('.csv'):
@@ -195,7 +197,7 @@ def process_all_links():
     # Loop through each link file and call the main() function
     for link_file in link_files:
         main(os.path.join(roi_links_dir, link_file))
-        time.sleep(1)  # Wait for 1 second before processing the next file
+        time.sleep(1)  # Wait for 2 seconds before processing the next file
 
 
 # Run the process_all_links function
