@@ -74,7 +74,7 @@ def main(link_file_path):
         driver.find_element(By.CSS_SELECTOR, '#frmlogin2 button[type="submit"].btn.btn-default').click()
 
         # Wait for the download to finish
-        time.sleep(8)
+        time.sleep(12)
 
         # Get the name of the latest file in the download directory
         downloaded_file = get_latest_file_in_directory(landing_pad_dir)
@@ -197,7 +197,7 @@ def process_all_links():
     # Loop through each link file and call the main() function
     for link_file in link_files:
         main(os.path.join(roi_links_dir, link_file))
-        time.sleep(1)  # Wait for 2 seconds before processing the next file
+        time.sleep(1)  # Wait for 1 second before processing the next file
 
 
 # Run the process_all_links function
