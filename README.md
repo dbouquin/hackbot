@@ -64,12 +64,12 @@ The rest of the imports are part of the standard Python library.
 ### Run
 Now you're ready to roll.   
 
-Open `main_selenium.py` and run it in an IDE or run it via the command line.  
+Open `main_selenium_cron.py` and run it in an IDE or run it via the command line.  
 
 The Hackbot uses Chromium (what the Chrome browser uses) headlessly (no GUI) and enters your credentials in order to initiate a file download from ROI servers. The file downloads faster than you can say "Why isn't there an API for this?" and is placed into the `landing_pad/` where it gets unzipped. Hackbot then renames the file to keep just the "job number" associated with the email you received for that report, plus the report name. The file is then moved to the location you specified. The report name is used to look up the location in the map file.
 
 ### Cron job
-See `cron_instructions.txt` and use `main_selenium_cron.py`
+See `cron_instructions.txt` for instructions on how to set up a cron job to run the Hackbot on a schedule.
 
 
 
