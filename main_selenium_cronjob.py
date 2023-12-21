@@ -99,7 +99,7 @@ def main(link_file_path):
 
                 # check for dop_files
                 dop_files = ['HTACTIVITIES', 'MGRATINGS', 'PLANNEDGIFTS', 'EVENTSANDATTENDEESSINCEFY19',
-                             'PLEDGES', 'PLEDGESCHEDULE', 'PROPOSALS',
+                             'PLEDGES', 'PLEDGE_SCHEDULE', 'PROPOSALS',
                              'ACCOUNTFLAGSSINCEFY18', 'RELATIONSHIPMANAGERASSIGNMENTS', 'TRANSACTIONSWSOLICITORS',
                              'ALLTRANSACTIONS', 'ALLACCOUNTSANDINFO', 'FIRSTGIFTSALL']
 
