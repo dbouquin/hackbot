@@ -74,7 +74,13 @@ def main(link_file_path):
         driver.find_element(By.CSS_SELECTOR, '#frmlogin2 button[type="submit"].btn.btn-default').click()
 
         # Wait for the download to finish
-        time.sleep(12)
+        # If downloaded file is associated with a text file in large_files wait 30 seconds, else wait 10 seconds
+        large_files = ['link_allaccountsandinfo.txt', 'link_transactionswsolicitors.txt']
+
+        if any(large_file in link_file_path for large_file in large_files):
+            time.sleep(30)
+        else:
+            time.sleep(10)
 
         # Get the name of the latest file in the download directory
         downloaded_file = get_latest_file_in_directory(landing_pad_dir)
