@@ -78,9 +78,9 @@ def main(link_file_path):
         large_files = ['link_allaccountsandinfo.txt', 'link_transactionswsolicitors.txt']
 
         if any(large_file in link_file_path for large_file in large_files):
-            time.sleep(30)
+            time.sleep(60)
         else:
-            time.sleep(10)
+            time.sleep(15)
 
         # Get the name of the latest file in the download directory
         downloaded_file = get_latest_file_in_directory(landing_pad_dir)
