@@ -30,7 +30,6 @@ def unzip_file(zip_filepath, dest_dir):
     with zipfile.ZipFile(zip_filepath, 'r') as zip_ref:
         zip_ref.extractall(dest_dir)
 
-
 # Main function
 def main(link_file_path):
     try:
@@ -74,11 +73,11 @@ def main(link_file_path):
         driver.find_element(By.CSS_SELECTOR, '#frmlogin2 button[type="submit"].btn.btn-default').click()
 
         # Wait for the download to finish
-        # If downloaded file is associated with a text file in large_files wait 100 seconds, else wait 15 seconds
+        # If downloaded file is associated with a text file in dop_files wait 120 seconds, else wait 15 seconds
         large_files = ['link_allaccountsandinfo.txt', 'link_transactionswsolicitors.txt', 'link_accountflagssincefy18.txt']
 
         if any(large_file in link_file_path for large_file in large_files):
-            time.sleep(100)
+            time.sleep(120)
         else:
             time.sleep(15)
 
@@ -203,7 +202,7 @@ def process_all_links():
     # Loop through each link file and call the main() function
     for link_file in link_files:
         main(os.path.join(roi_links_dir, link_file))
-        time.sleep(1)  # Wait for 1 second before processing the next file
+        time.sleep(2)  # Wait for 2 second before processing the next file
 
 
 # Run the process_all_links function
