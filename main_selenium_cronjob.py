@@ -73,13 +73,18 @@ def main(link_file_path):
         driver.find_element(By.CSS_SELECTOR, '#frmlogin2 button[type="submit"].btn.btn-default').click()
 
         # Wait for the download to finish
-        # If downloaded file is associated with a text file in dop_files wait 60 seconds, else wait 15 seconds
+        # If downloaded file is associated with a text file in dop_files wait 20 seconds, else wait 5 seconds
         large_files = ['link_allaccountsandinfo.txt', 'link_alltransactions.txt', 'link_transactionswsolicitors.txt', 'link_accountflagssincefy18.txt']
 
         if any(large_file in link_file_path for large_file in large_files):
-            time.sleep(60)
+            time.sleep(20)
         else:
-            time.sleep(15)
+            time.sleep(5)
+
+        # Check for '.crdownload' files and wait until download completes
+        while any('.crdownload' in f for f in os.listdir(landing_pad_dir)):
+            print("Download in progress, waiting for 10 more seconds...")
+            time.sleep(10)
 
         # Get the name of the latest file in the download directory
         downloaded_file = get_latest_file_in_directory(landing_pad_dir)
@@ -202,7 +207,7 @@ def process_all_links():
     # Loop through each link file and call the main() function
     for link_file in link_files:
         main(os.path.join(roi_links_dir, link_file))
-        time.sleep(15)  # Wait for 15 seconds before processing the next file - let OneDrive sync
+        time.sleep(10)  # Wait 10 seconds before processing the next file - let OneDrive sync
 
 
 # Run the process_all_links function
