@@ -83,7 +83,7 @@ def main(link_file_path):
 
         # Check for '.crdownload' files and wait until download completes
         while any('.crdownload' in f for f in os.listdir(landing_pad_dir)):
-            print("Download in progress, waiting for 10 more seconds...")
+            #print("Download in progress, waiting for 10 more seconds...")
             time.sleep(10)
 
         # Get the name of the latest file in the download directory
