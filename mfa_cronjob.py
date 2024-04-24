@@ -1,21 +1,13 @@
-#!/opt/anaconda3/envs/hackbot/bin/python
-
 import os
-
-# Set the current working directory to the script's directory
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
-
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
 import json
 import zipfile
-import os
 import time
 import shutil
 from datetime import datetime
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
 
 # Function to get the latest file in a directory
 def get_latest_file_in_directory(directory):
@@ -23,95 +15,81 @@ def get_latest_file_in_directory(directory):
     files.sort(key=lambda x: os.path.getmtime(os.path.join(directory, x)))
     return files[-1] if files else None
 
-
 # Function to unzip a file
 def unzip_file(zip_filepath, dest_dir):
     with zipfile.ZipFile(zip_filepath, 'r') as zip_ref:
         zip_ref.extractall(dest_dir)
 
-# Main function
-def main(link_file_path):
+# Directories
+def initialize_directories():
+    """Loads the directory paths from the map.json file and initializes global variables."""
+    global directory_map, roi_links_dir, landing_pad_dir, credentials_path
     try:
-        # Load the URL from the file
-        with open(link_file_path, 'r') as f:
-            url = f.read().strip()
-
-        # Replace old url start with "app.roicrm.net/live"
-        url = url.replace("secure2.roisolutions.net/enterprise", "app.roicrm.net/live")
-
-        # Load the credentials from the file
-        with open(credentials_path, 'r') as f:
-            credentials = json.load(f)
-
-        # Load the directory map from the JSON file
-        with open('map.json', 'r') as f:
+        with open('/Users/dbouquin/Library/CloudStorage/OneDrive-NationalParksConservationAssociation/Data_Vault/hackbot_data_vault/map.json', 'r') as f:
             directory_map = json.load(f)
             landing_pad_dir = directory_map.get('landing_pad')
             roi_links_dir = directory_map.get('roi_links')
+            credentials_path = directory_map.get('credentials')
+    except Exception as e:
+        raise RuntimeError(f"Failed to initialize directories from map.json: {e}")
 
-        # Set up the Chrome options
-        chrome_options = webdriver.ChromeOptions()
-        # This will save the cookies
-        chrome_options.add_argument("user-data-dir=/Users/dbouquin/Library/Application Support/Google/Chrome/Profile 3") 
-        #chrome_options.add_argument("--headless")  # GUI off
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument('--disable-gpu') 
-        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+# Web driver
+def setup_driver():
+    """Sets up and returns a configured Chrome webdriver."""
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("user-data-dir=/Users/dbouquin/Library/Application Support/Google/Chrome/Profile 3")
+    #chrome_options.add_argument("--headless")  # GUI off
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument('--disable-gpu') 
+    chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+    prefs = {
+        "download.default_directory": landing_pad_dir,
+        "download.prompt_for_download": False,
+        "useAutomationExtension": False
+    }
+    chrome_options.add_experimental_option("prefs", prefs)
+    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    webdriver_service = Service(ChromeDriverManager().install())
+    return webdriver.Chrome(service=webdriver_service, options=chrome_options)
 
-        # Set the default download directory
-        prefs = {"download.default_directory": landing_pad_dir,
-                 "download.prompt_for_download": False,
-                 "useAutomationExtension": False}
-        chrome_options.add_experimental_option("prefs", prefs)
-        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+# Initial login
+def login_once(driver):
+    """Perform the login operation once before processing the downloads."""
+    try:
+        with open(credentials_path, 'r') as f:
+            credentials = json.load(f)
 
-        # Set up the WebDriver service
-        webdriver_service = Service(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=webdriver_service, options=chrome_options)
+        driver.get("https://app.roicrm.net/live")  # Specify the initial login URL
+        time.sleep(5)
 
+        driver.find_element(By.ID, 'username').send_keys(credentials['username'])
+        driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]').click()
+        time.sleep(5)
+        driver.find_element(By.NAME, 'passwd').send_keys(credentials['password'])
+        driver.find_element(By.ID, 'idSIButton9').click()
+        time.sleep(20)  # Wait for manual interactions if necessary
+
+    except Exception as e:
+        print(f"Login error occurred: {e}")
+
+def main(driver, link_file_path):
+    try:
+        with open(link_file_path, 'r') as f:
+            url = f.read().strip()
+        url = url.replace("secure2.roisolutions.net/enterprise", "app.roicrm.net/live")
         # Navigate to the URL
         driver.get(url)
-
-        # Sleep 
-        time.sleep(5)
-
-        # Click continue when shown notice about new login screen - only be required once if cookies are saved
-        #driver.find_element(By.CSS_SELECTOR, '#frmlogin2 button[onclick="persistskip();auth0login();"].btn.btn-default').click()
-        
-        # Enter the email 
-        driver.find_element(By.ID, 'username').send_keys(credentials['username'])
-
-        # Click "continue" where button type is submit
-        driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]').click()
-        
-        # Wait for the page to load
-        time.sleep(5)
-
-        # Enter the password 
-        driver.find_element(By.NAME, 'passwd').send_keys(credentials['password'])
-
-        # Click to submit
-        driver.find_element(By.ID, 'idSIButton9').click()
-
-        # Wait for the page to load and allow user to manually enter code
-        time.sleep(60)
-
-        # Wait for the download to finish
-        # If downloaded file is associated with a text file in dop_files wait 20 seconds, else wait 5 seconds
-        large_files = ['link_allaccountsandinfo.txt', 'link_alltransactions.txt', 'link_transactionswsolicitors.txt', 'link_accountflagssincefy18.txt']
-
-        if any(large_file in link_file_path for large_file in large_files):
-            time.sleep(10)
-        else:
-            time.sleep(5)
-
-        # Check for '.crdownload' files and wait until download completes
+        # Wait until download completes 
+        time.sleep(10)  # Arbitrary wait time for download start
         while any('.crdownload' in f for f in os.listdir(landing_pad_dir)):
-            #print("Download in progress, waiting for 10 more seconds...")
-            time.sleep(10)
-
-        # Get the name of the latest file in the download directory
+            time.sleep(10)  # Check every 10 seconds
+        # Handling downloaded files
+        large_files = ['link_allaccountsandinfo.txt', 
+                       'link_alltransactions.txt', 
+                       'link_transactionswsolicitors.txt', 
+                       'link_accountflagssincefy18.txt']
+        #Get the name of the latest file in the download directory
         downloaded_file = get_latest_file_in_directory(landing_pad_dir)
 
         # If the downloaded file is a ZIP file, unzip it
@@ -203,41 +181,22 @@ def main(link_file_path):
                 os.path.join(directory, static_name)
             )
 
-        # Close the browser
-        driver.quit()
-
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred while processing {link_file_path}: {e}")
 
-
-def initialize_directories():
-    """Loads the directory paths from the map.json file and initializes global variables."""
-    global directory_map, roi_links_dir, landing_pad_dir, credentials_path
-    try:
-        with open('/Users/dbouquin/Library/CloudStorage/OneDrive-NationalParksConservationAssociation/'
-                  'Data_Vault/hackbot_data_vault/map.json', 'r') as f:
-            directory_map = json.load(f)
-            landing_pad_dir = directory_map.get('landing_pad')
-            roi_links_dir = directory_map.get('roi_links')
-            credentials_path = directory_map.get('credentials')
-    except Exception as e:
-        raise RuntimeError(f"Failed to initialize directories from map.json: {e}")
-
-
-# Process all the files in the roi_links directory
-def process_all_links():
-    # Get a list of all .txt files in the roi_links/ directory
+def process_all_links(driver):
+    """Processes all .txt files with URLs in the roi_links_dir using the provided driver."""
     link_files = [f for f in os.listdir(roi_links_dir) if f.endswith('.txt')]
-
-    # Loop through each link file and call the main() function
+    first_file = True
     for link_file in link_files:
-        main(os.path.join(roi_links_dir, link_file))
-        time.sleep(60)  # Wait 60 seconds before processing the next file - let OneDrive sync
+        if first_file:
+            login_once(driver)
+            first_file = False
+        main(driver, os.path.join(roi_links_dir, link_file))
+        time.sleep(15)  # Adjust as necessary
 
-
-# Run the process_all_links function
-initialize_directories()
-process_all_links()
-
-
-#%%
+if __name__ == "__main__":
+    initialize_directories()
+    driver = setup_driver()
+    process_all_links(driver)
+    driver.quit()
