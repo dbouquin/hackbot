@@ -74,7 +74,7 @@ def main(link_file_path):
         driver.get(url)
 
         # Sleep 
-        time.sleep(5)
+        time.sleep(10)
 
         # Click continue when shown notice about new login screen - only be required once if cookies are saved
         #driver.find_element(By.CSS_SELECTOR, '#frmlogin2 button[onclick="persistskip();auth0login();"].btn.btn-default').click()
@@ -86,7 +86,7 @@ def main(link_file_path):
         driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]').click()
         
         # Wait for the page to load
-        time.sleep(5)
+        time.sleep(10)
 
         # Enter the password 
         driver.find_element(By.NAME, 'passwd').send_keys(credentials['password'])

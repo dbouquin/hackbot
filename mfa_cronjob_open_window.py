@@ -9,7 +9,6 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
-
 # Function to get the latest file in a directory
 def get_latest_file_in_directory(directory):
     files = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
@@ -38,21 +37,8 @@ def initialize_directories():
 def setup_driver():
     """Sets up and returns a configured Chrome webdriver."""
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument("user-data-dir=/Users/dbouquin/Library/Application Support/Google/Chrome/Profile 3")
-    #chrome_options.add_argument("--headless")  # GUI off
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument('--disable-gpu') 
-    chrome_options.add_argument("--disable-blink-features=AutomationControlled")
-    prefs = {
-        "download.default_directory": landing_pad_dir,
-        "download.prompt_for_download": False,
-        "useAutomationExtension": False
-    }
-    chrome_options.add_experimental_option("prefs", prefs)
-    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    webdriver_service = Service(ChromeDriverManager().install())
-    return webdriver.Chrome(service=webdriver_service, options=chrome_options)
+    chrome_options.add_experimental_option("debuggerAddress", "localhost:9222")
+    return webdriver.Chrome(options=chrome_options)
 
 # Initial login
 def login_once(driver):
@@ -64,11 +50,15 @@ def login_once(driver):
         driver.get("https://app.roicrm.net/live")  # Specify the initial login URL
         time.sleep(5)
 
-        driver.find_element(By.ID, 'username').send_keys(credentials['username'])
-        driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]').click()
+        # If there is a username field, enter the username and click submit
+        if driver.find_elements(By.ID, 'username'):
+            driver.find_element(By.ID, 'username').send_keys(credentials['username'])
+            driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]').click()
         time.sleep(5)
-        driver.find_element(By.NAME, 'passwd').send_keys(credentials['password'])
-        driver.find_element(By.ID, 'idSIButton9').click()
+        # If there is a password field, enter the password and click submit
+        if driver.find_elements(By.NAME, 'passwd'):
+            driver.find_element(By.NAME, 'passwd').send_keys(credentials['password'])
+            driver.find_element(By.ID, 'idSIButton9').click()
         time.sleep(20)  # Wait for manual interactions if necessary
 
     except Exception as e:
@@ -194,10 +184,11 @@ def process_all_links(driver):
             login_once(driver)
             first_file = False
         main(driver, os.path.join(roi_links_dir, link_file))
-        time.sleep(15)  # Adjust as necessary
+        time.sleep(15)  # Wait for OneDrive to sync before processing the next file
 
 if __name__ == "__main__":
     initialize_directories()
     driver = setup_driver()
     process_all_links(driver)
-    driver.quit()
+    #driver.quit()
+    #driver.close()
