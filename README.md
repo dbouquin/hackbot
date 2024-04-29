@@ -61,12 +61,27 @@ $ pip install selenium webdriver_manager
 ``````
 The rest of the imports are part of the standard Python library. 
 
+### Update due to MFA requirements - using a specific Chrome profile
+Create a directory where you want to store preferences for a Hackbot-specific Chrome profile (e.g., `/Users/your_username/Documents/ChromeProfileForSelenium`)
+
+Run this in the terminal to set up the Chrome profile:
+`/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=/Users/your_username/Documents/ChromeProfileForSelenium`
+
+Once the new browser window launches, go to Chrome > Settings and update the download directory to be the `landing_pad` directory.
+
+Then run this in the terminal:
+`/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --allow-pre-commit-input --disable-background-networking --disable-blink-features=AutomationControlled --disable-client-side-phishing-detection --disable-default-apps --disable-dev-shm-usage --disable-gpu --disable-hang-monitor --disable-popup-blocking --disable-prompt-on-repost --disable-sync --enable-logging --log-level=0 --no-first-run --no-sandbox --no-service-autorun --password-store=basic --remote-debugging-port=9222 --test-type=webdriver --use-mock-keychain --user-data-dir=/Users/your_username/Documents/ChromeProfileForSelenium --flag-switches-begin --flag-switches-end`
+
+Leave this window open.
+
 ### Run
 Now you're ready to roll.   
 
-Open `main_selenium_cron.py` and run it in an IDE or run it via the command line.  
+Run `mfa_cronjob_open_window.py` in an IDE or run it via the command line.  
 
-The Hackbot uses Chromium (what the Chrome browser uses) headlessly (no GUI) and enters your credentials in order to initiate a file download from ROI servers. The file downloads faster than you can say "Why isn't there an API for this?" and is placed into the `landing_pad/` where it gets unzipped. Hackbot then renames the file to keep just the "job number" associated with the email you received for that report, plus the report name. The file is then moved to the location you specified. The report name is used to look up the location in the map file.
+The Hackbot uses Chromium (what the Chrome browser uses) and enters your credentials in order to initiate a file download from ROI servers. The file downloads faster than you can say "Why isn't there an API for this?" and is placed into the `landing_pad/` where it gets unzipped. Hackbot then renames the file to keep just the "job number" associated with the email you received for that report, plus the report name. The file is then moved to the location you specified. The report name is used to look up the location in the map file.
+
+The first time the script runs you will be prompted for a MFA code.
 
 ### Cron job
 See `cron_instructions.txt` for instructions on how to set up a cron job to run the Hackbot on a schedule.
