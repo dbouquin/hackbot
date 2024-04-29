@@ -52,7 +52,7 @@ def main(link_file_path):
         # Set up the Chrome options
         chrome_options = webdriver.ChromeOptions()
         # This will save the cookies
-        chrome_options.add_argument("user-data-dir=/Users/dbouquin/Library/Application Support/Google/Chrome/Profile 3") 
+        chrome_options.add_argument("user-data-dir=/Users/dbouquin/Library/Application Support/Google/Chrome/Profile 7") 
         #chrome_options.add_argument("--headless")  # GUI off
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")

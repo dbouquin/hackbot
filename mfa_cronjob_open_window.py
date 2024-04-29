@@ -9,6 +9,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
+# /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --allow-pre-commit-input --disable-background-networking --disable-blink-features=AutomationControlled --disable-client-side-phishing-detection --disable-default-apps --disable-dev-shm-usage --disable-gpu --disable-hang-monitor --disable-popup-blocking --disable-prompt-on-repost --disable-sync --enable-logging --log-level=0 --no-first-run --no-sandbox --no-service-autorun --password-store=basic --remote-debugging-port=9222 --test-type=webdriver --use-mock-keychain --user-data-dir=/Users/dbouquin/Documents/ChromeProfileForSelenium --flag-switches-begin --flag-switches-end
+
 # Function to get the latest file in a directory
 def get_latest_file_in_directory(directory):
     files = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
