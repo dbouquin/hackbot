@@ -49,7 +49,7 @@ Once you have saved your credentials file, **update the credentials path specifi
 *Note: the [.gitignore](https://github.com/dbouquin/hackbot/blob/main/.gitignore) file in this repo ignores your credenitals file so you won't end up uploading it to GitHub by mistake.*
 
 #### Specify your map.json file's location
-The only path that's hardcoded into the main script is the path to `map.json`. Open the `main_selenium.py` file and update the `initialize_directories()` function with the file path you're using for your map.
+The only path that's hardcoded into the main script is the path to `map.json`. Open the `mfa_cronjob_open_window.py` file and update the `initialize_directories()` function with the file path you're using for your map.
 
 #### Install dependencies
 
@@ -79,12 +79,9 @@ Now you're ready to roll.
 
 Run `mfa_cronjob_open_window.py` in an IDE or run it via the command line.  
 
-The Hackbot uses Chromium (what the Chrome browser uses) and enters your credentials in order to initiate a file download from ROI servers. The file downloads faster than you can say "Why isn't there an API for this?" and is placed into the `landing_pad/` where it gets unzipped. Hackbot then renames the file to keep just the "job number" associated with the email you received for that report, plus the report name. The file is then moved to the location you specified. The report name is used to look up the location in the map file.
+The Hackbot uses Chrome and enters your credentials in order to initiate a file download from ROI servers. The file downloads faster than you can say "Why isn't there an API for this?" and is placed into the `landing_pad/` where it gets unzipped. Hackbot then renames the file to keep just the "job number" associated with the email you received for that report (or the date if needed), plus the report name. The file is then moved to the location you specified. The report name is used to look up the location in the map file.
 
 The first time the script runs you will be prompted for a MFA code.
-
-### Cron job
-See `cron_instructions.txt` for instructions on how to set up a cron job to run the Hackbot on a schedule.
 
 
 
