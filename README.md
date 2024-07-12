@@ -70,7 +70,8 @@ Run this in the terminal to set up the Chrome profile:
 Once the new browser window launches, go to Chrome > Settings and update the download directory to be the `landing_pad` directory.
 
 Then run this in the terminal:
-`/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --allow-pre-commit-input --disable-background-networking --disable-blink-features=AutomationControlled --disable-client-side-phishing-detection --disable-default-apps --disable-dev-shm-usage --disable-gpu --disable-hang-monitor --disable-popup-blocking --disable-prompt-on-repost --disable-sync --enable-logging --log-level=0 --no-first-run --no-sandbox --no-service-autorun --password-store=basic --remote-debugging-port=9222 --test-type=webdriver --use-mock-keychain --user-data-dir=/Users/your_username/Documents/ChromeProfileForSelenium --flag-switches-begin --flag-switches-end`
+
+`/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --allow-pre-commit-input --disable-background-networking --disable-blink-features=AutomationControlled --disable-client-side-phishing-detection --disable-default-apps --disable-dev-shm-usage --disable-gpu --disable-hang-monitor --disable-popup-blocking --disable-prompt-on-repost --disable-sync --enable-logging --log-level=0 --no-first-run --no-sandbox --no-service-autorun --password-store=basic --remote-debugging-port=9222 --test-type=webdriver --use-mock-keychain --user-data-dir=/Users/dbouquin/Documents/ChromeProfileForSelenium --flag-switches-begin --flag-switches-end`
 
 Leave this window open.
 
